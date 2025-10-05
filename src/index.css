@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* NASA Blue */
+    --primary: 218 100% 30%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Deep Space Purple */
+    --secondary: 260 60% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Solar Yellow/Gold */
+    --accent: 45 100% 50%;
+    --accent-foreground: 260 60% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 45 100% 50%;
+
+    --radius: 1rem;
+
+    /* Custom NASA Theme Colors */
+    --nasa-blue: 218 100% 30%;
+    --space-purple: 260 60% 15%;
+    --space-purple-light: 260 50% 25%;
+    --solar-yellow: 45 100% 50%;
+    --cosmic-white: 0 0% 98%;
+    --star-white: 0 0% 100%;
+    
+    /* Gradients */
+    --gradient-space: linear-gradient(135deg, hsl(260 60% 15%), hsl(260 40% 8%));
+    --gradient-nasa: linear-gradient(90deg, hsl(218 100% 30%), hsl(218 90% 40%));
+    --gradient-cosmic: linear-gradient(180deg, hsl(260 60% 20% / 0.8), hsl(260 40% 10% / 0.9));
+    
+    /* Glass Effects */
+    --glass-bg: hsl(0 0% 100% / 0.05);
+    --glass-border: hsl(0 0% 100% / 0.15);
+    --glass-blur: blur(16px);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(45 100% 50% / 0.3);
+    --shadow-card: 0 4px 24px hsl(260 60% 10% / 0.4);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 260 60% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 260 50% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 260 50% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 218 100% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 50% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 260 40% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 45 100% 55%;
+    --accent-foreground: 260 60% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 260 30% 25%;
+    --input: 260 30% 25%;
+    --ring: 45 100% 50%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer utilities {
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+}
+
+
