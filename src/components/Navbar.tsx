@@ -47,7 +47,7 @@ export const Navbar = ({ onSearchResultClick }: NavbarProps) => {
     <a href="/" className="flex items-center gap-3 flex-shrink-0">
       <img src={nasaLogo} alt="NASA" className="h-14 w-auto" />
       <h1 className="text-xl font-bold text-white hidden sm:block tracking-wide drop-shadow-lg">
-        NASA Research Portal
+        Bio Nebula For NASA
       </h1>
     </a>
 

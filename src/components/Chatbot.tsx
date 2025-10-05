@@ -38,6 +38,42 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
     }
   }, [messages, isThinking]);
 
+  const extractResponseContent = (data: any): string => {
+    // If it's already a string, return it directly
+    if (typeof data === 'string') {
+      return data;
+    }
+    
+    // If it's an object, look for common response fields
+    if (typeof data === 'object' && data !== null) {
+      // Try common response field names in priority order
+      const responseFields = [
+        'response', 'message', 'answer', 'text', 'content', 
+        'reply', 'output', 'result', 'ai_response'
+      ];
+      
+      for (const field of responseFields) {
+        if (data[field] && typeof data[field] === 'string') {
+          return data[field];
+        }
+      }
+      
+      // If no common fields found but object has content, try to extract meaningful text
+      const stringData = JSON.stringify(data);
+      if (stringData.length < 500) { // Avoid showing large objects
+        // Look for any string values that might be the response
+        for (const key in data) {
+          if (typeof data[key] === 'string' && data[key].length > 10) {
+            return data[key];
+          }
+        }
+      }
+    }
+    
+    // Fallback message
+    return "I've analyzed your query about the research. Is there anything specific you'd like to know more about?";
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -65,7 +101,6 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
       });
 
       console.log("API Response status:", response.status);
-      console.log("API Response headers:", response.headers);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -84,23 +119,8 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
 
       console.log("Parsed API data:", data);
       
-      // Handle different possible response structures
-      let botContent = "I've processed your query. Let me know if you need more information.";
-      
-      if (data.response) {
-        botContent = data.response;
-      } else if (data.message) {
-        botContent = data.message;
-      } else if (data.answer) {
-        botContent = data.answer;
-      } else if (data.text) {
-        botContent = data.text;
-      } else if (typeof data === 'string') {
-        botContent = data;
-      } else if (Object.keys(data).length > 0) {
-        // If we have data but no clear response field, stringify it for debugging
-        botContent = "Received data: " + JSON.stringify(data, null, 2);
-      }
+      // Extract only the response content, not the whole object
+      const botContent = extractResponseContent(data);
 
       const botResponse: Message = {
         role: "bot",
@@ -124,6 +144,8 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
         } else {
           errorMessage += `Error: ${error.message}`;
         }
+      } else {
+        errorMessage += "An unexpected error occurred.";
       }
       
       const errorResponse: Message = {
@@ -141,27 +163,6 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
     if (e.key === "Enter" && !isLoading && !e.shiftKey) {
       e.preventDefault();
       handleSend();
-    }
-  };
-
-  // Test the API directly (for debugging)
-  const testAPI = async () => {
-    console.log("Testing API connection...");
-    try {
-      const testResponse = await fetch(CHATBOT_API_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: "Test connection",
-        }),
-      });
-      console.log("Test API status:", testResponse.status);
-      const testData = await testResponse.text();
-      console.log("Test API response:", testData);
-    } catch (error) {
-      console.error("Test API error:", error);
     }
   };
 
@@ -196,8 +197,6 @@ export const Chatbot = ({ documentTitle }: ChatbotProps) => {
             <h3 className="text-lg font-bold text-white">Research Assistant</h3>
             <p className="text-white/70 text-xs">AI analysis for {documentTitle}</p>
           </div>
-          
-            
         </div>
       </div>
 
